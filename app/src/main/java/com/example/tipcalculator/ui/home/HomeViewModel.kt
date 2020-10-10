@@ -16,7 +16,7 @@ class HomeViewModel : ViewModel() {
     private val _totalAmount = MutableLiveData<String>()
 
     val tipAmount: LiveData<String>
-        get() = _tipAmountgi
+        get() = _tipAmount
 
     private val _tipAmount = MutableLiveData<String>()
 
