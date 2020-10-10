@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import com.example.tipcalculator.R
 import com.example.tipcalculator.util.addDecimalLimiter
 import com.example.tipcalculator.util.addDigitsRangeLimit
+import com.example.tipcalculator.util.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_home.*
 
@@ -24,6 +25,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         setupTipButtons()
         setupPartySizeButtons()
         setupObservers()
+
+        constraint_view.setOnClickListener {
+            hideKeyboard()
+            amount_input_edit.clearFocus()
+            tip_input_edit.clearFocus()
+            people_input_edit.clearFocus()
+        }
     }
 
     private fun setupObservers() {

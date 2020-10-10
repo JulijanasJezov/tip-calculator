@@ -31,7 +31,7 @@ class HomeViewModel : ViewModel() {
     private var partySize = 1
 
     fun updateBillAmount(amount: String?) {
-        billAmount = BigDecimal.valueOf(if (!amount.isNullOrBlank()) amount.toDouble() else 0.0)
+        billAmount = BigDecimal(if (!amount.isNullOrBlank()) amount.toDouble() else 0.0)
         calculateTotalAmount()
     }
 
@@ -52,17 +52,19 @@ class HomeViewModel : ViewModel() {
     }
 
     private fun calculateTipAmount(): BigDecimal {
-        val tempTip = if (tip == 0) BigDecimal.ZERO else billAmount.divide(ONE_HUNDRED).times(BigDecimal.valueOf(tip.toDouble()))
+        val tempTip = if (tip == 0) BigDecimal.ZERO else billAmount.divide(ONE_HUNDRED)
+            .times(BigDecimal.valueOf(tip.toDouble()))
+
         _tipAmount.value = tempTip.setScale(2, RoundingMode.UP).toString()
         return tempTip
     }
 
     private fun calculatePerPersonAmount() {
-        val tempPerPerson = totalAmountFloat.divide(BigDecimal.valueOf(partySize.toDouble()), 2, RoundingMode.UP)
+        val tempPerPerson = totalAmountFloat.divide(BigDecimal(partySize), 2, RoundingMode.UP)
         _perPersonAmount.value = tempPerPerson.toString()
     }
 
     companion object {
-        private val ONE_HUNDRED = BigDecimal.valueOf(100)
+        private val ONE_HUNDRED = BigDecimal(100)
     }
 }

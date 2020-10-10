@@ -7,9 +7,12 @@
     tools:context=".ui.home.HomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/activity_vertical_margin">
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:clickable="true"
+        android:focusable="true">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/amount_input_field"
@@ -25,7 +28,8 @@
                 android:id="@+id/amount_input_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="numberDecimal" />
+                android:inputType="numberDecimal"
+                android:longClickable="false" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -42,7 +46,8 @@
                 android:id="@+id/tip_input_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number" />
+                android:inputType="number"
+                android:longClickable="false" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -105,7 +110,8 @@
                 android:id="@+id/people_input_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number" />
+                android:inputType="number"
+                android:longClickable="false" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -202,6 +208,7 @@
             style="?textLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textIsSelectable="true"
             app:layout_constraintStart_toStartOf="@id/guideline"
             app:layout_constraintTop_toBottomOf="@id/people_button_group"
             tools:text="23.12" />
@@ -211,6 +218,7 @@
             style="?textLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textIsSelectable="true"
             app:layout_constraintStart_toStartOf="@id/guideline"
             app:layout_constraintTop_toBottomOf="@id/tip_amount_result"
             tools:text="143.52" />
@@ -221,6 +229,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/text_view_default_margin"
+            android:textIsSelectable="true"
             app:layout_constraintStart_toStartOf="@id/guideline"
             app:layout_constraintTop_toBottomOf="@id/total_result"
             tools:text="72.78" />
