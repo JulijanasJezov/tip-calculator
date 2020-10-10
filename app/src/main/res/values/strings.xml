@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Tip Calculator</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="amount_text">Amount</string>
+    <string name="tip_text">Tip</string>
+    <string name="tip_10_percent">10%</string>
+    <string name="tip_15_percent">15%</string>
+    <string name="tip_20_percent">20%</string>
+    <string name="tip_25_percent">25%</string>
+    <string name="party_size_text">Party size</string>
+    <string name="number_25">25</string>
+    <string name="number_20">20</string>
+    <string name="number_15">15</string>
+    <string name="number_10">10</string>
+    <string name="number_8">8</string>
+    <string name="number_6">6</string>
+    <string name="number_4">4</string>
+    <string name="number_2">2</string>
+    <string name="tip_amount">Tip amount:</string>
+    <string name="total">Total:</string>
+    <string name="per_person">Per person:</string>
+</resources>
