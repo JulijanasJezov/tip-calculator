@@ -25,13 +25,13 @@ class HomeViewModel : ViewModel() {
 
     private val _perPersonAmount = MutableLiveData<String>()
 
-    private var totalAmountFloat = 0f
-    private var billAmount = 0f
+    private var totalAmountFloat = BigDecimal(0)
+    private var billAmount = BigDecimal(0)
     private var tip = 0
     private var partySize = 1
 
     fun updateBillAmount(amount: String?) {
-        billAmount = if (!amount.isNullOrBlank()) amount.toFloat() else 0f
+        billAmount = BigDecimal.valueOf(if (!amount.isNullOrBlank()) amount.toDouble() else 0.0)
         calculateTotalAmount()
     }
 
@@ -46,20 +46,23 @@ class HomeViewModel : ViewModel() {
     }
 
     private fun calculateTotalAmount() {
-        totalAmountFloat = billAmount + calculateTipAmount()
-
-        _totalAmount.value = totalAmountFloat.format(2)
+        totalAmountFloat = billAmount.add(calculateTipAmount())
+        _totalAmount.value = totalAmountFloat.setScale(2, RoundingMode.UP).toString()
         calculatePerPersonAmount()
     }
 
-    private fun calculateTipAmount(): Float {
-        val tempTip = if (tip == 0) 0f else billAmount / 100 * tip
-        _tipAmount.value = tempTip.format(2)
+    private fun calculateTipAmount(): BigDecimal {
+        val tempTip = if (tip == 0) BigDecimal.ZERO else billAmount.divide(ONE_HUNDRED).times(BigDecimal.valueOf(tip.toDouble()))
+        _tipAmount.value = tempTip.setScale(2, RoundingMode.UP).toString()
         return tempTip
     }
 
     private fun calculatePerPersonAmount() {
-        val tempPerPerson = totalAmountFloat / partySize
-        _perPersonAmount.value = tempPerPerson.format(2)
+        val tempPerPerson = totalAmountFloat.divide(BigDecimal.valueOf(partySize.toDouble()), 2, RoundingMode.UP)
+        _perPersonAmount.value = tempPerPerson.toString()
+    }
+
+    companion object {
+        private val ONE_HUNDRED = BigDecimal.valueOf(100)
     }
 }
