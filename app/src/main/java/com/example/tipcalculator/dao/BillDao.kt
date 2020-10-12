@@ -1,9 +1,6 @@
 package com.example.tipcalculator.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.example.tipcalculator.model.Bill
 import kotlinx.coroutines.flow.Flow
 
@@ -15,6 +12,9 @@ interface BillDao {
     @Query("SELECT * FROM bill")
     fun loadAllBillsFlow(): Flow<List<Bill>>
 
-    @Query("DELETE FROM bill ")
-    suspend fun deleteCache()
+    @Query("delete from bill where id in (:idList)")
+    suspend fun deleteBillsFromDb(idList: List<Int>)
+
+    @Delete
+    suspend fun deleteBill(bill: Bill)
 }

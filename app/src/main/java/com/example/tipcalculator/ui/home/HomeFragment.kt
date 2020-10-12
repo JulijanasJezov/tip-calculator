@@ -1,5 +1,6 @@
 package com.example.tipcalculator.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -28,7 +29,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true);
         enterTransition = MaterialFadeThrough().apply {
-            duration = 500
+            duration = resources.getInteger(R.integer.config_navAnimTime).toLong()
         }
     }
 
@@ -41,6 +42,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         return when (item.itemId) {
             R.id.favorite -> {
                 saveBill()
+                true
+            }
+            R.id.share -> {
+                shareBill()
                 true
             }
             else -> false
@@ -77,7 +82,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         })
 
         homeViewModel.isBillSaved.observe(viewLifecycleOwner, {
-            it.get()?.let{
+            it.get()?.let {
                 showSavedSnackbar()
             }
         })
@@ -124,27 +129,53 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             tip_amount_result.text.toString(),
             total_result.text.toString(),
             per_person_result.text.toString()
-        )
+        ) else showErrorSnackbar("Amount cannot be empty")
     }
 
-    private fun isAmountValid() = if(amount_input_edit.text.isNullOrBlank()) {
-        showInvalidAmountSnackbar()
-        false
-    } else true
+    private fun isAmountValid() = !amount_input_edit.text.isNullOrBlank()
 
     private fun showSavedSnackbar() {
-        Snackbar.make(requireView(),
-            "Bill has been saved!"
-            , Snackbar.LENGTH_SHORT)
-            .setBackgroundTint(resources.getColor(R.color.design_default_color_primary, requireContext().theme))
+        Snackbar.make(
+            requireView(),
+            "Bill has been saved!", Snackbar.LENGTH_SHORT
+        )
+            .setBackgroundTint(
+                resources.getColor(
+                    R.color.design_default_color_primary,
+                    requireContext().theme
+                )
+            )
             .show()
     }
 
-    private fun showInvalidAmountSnackbar() {
-        Snackbar.make(requireView(),
-            "Amount cannot be empty"
-            , Snackbar.LENGTH_SHORT)
-            .setBackgroundTint(resources.getColor(R.color.design_default_color_error, requireContext().theme))
-            .show()
+    private fun showErrorSnackbar(message: String) = Snackbar.make(
+        requireView(),
+        message,
+        Snackbar.LENGTH_SHORT)
+        .setBackgroundTint(resources.getColor(
+            R.color.design_default_color_error,
+            requireContext().theme)
+        ).show()
+
+    private fun shareBill() {
+        if (!isAmountValid()) showErrorSnackbar("Nothing to share")
+        else {
+            var textToShare = "Amount: ${amount_input_edit.text}\n"
+            if (!tip_input_edit.text.isNullOrEmpty()) textToShare += "Tip: ${tip_input_edit.text}%\n"
+            if (!people_input_edit.text.isNullOrEmpty()) textToShare += "People: ${people_input_edit.text}\n"
+
+            textToShare += "Tip amount: ${tip_amount_result.text}\n" +
+                    "Per person: ${per_person_result.text}\n" +
+                    "Total: ${total_result.text}"
+
+            val sendIntent: Intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, textToShare)
+                type = "text/plain"
+            }
+
+            val shareIntent = Intent.createChooser(sendIntent, null)
+            startActivity(shareIntent)
+        }
     }
 }

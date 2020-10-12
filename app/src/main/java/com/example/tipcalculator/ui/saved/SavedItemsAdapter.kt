@@ -1,9 +1,11 @@
 package com.example.tipcalculator.ui.saved
 
 import android.content.Context
+import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -12,10 +14,26 @@ import com.example.tipcalculator.model.Bill
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_bill.view.*
 
-class SavedItemsAdapter() :
-    ListAdapter<Bill, SavedItemsAdapter.ViewHolder>(
-        DiffCallback()
-    ) {
+class SavedItemsAdapter(
+    private val context: Context,
+    private val savedItemsAdapterClickListener: SavedItemsAdapterClickListener
+) : ViewHolderClickListener,
+    ListAdapter<Bill, SavedItemsAdapter.ViewHolder>(DiffCallback()) {
+
+    val selectedIds: MutableList<Int> = ArrayList()
+
+    override fun onLongItemClick(position: Int) {
+        if (!SavedFragment.isMultiSelectOn) {
+            SavedFragment.isMultiSelectOn = true
+        }
+        addIDIntoSelectedIds(position)
+    }
+
+    override fun onItemClick(position: Int) {
+        if (SavedFragment.isMultiSelectOn) {
+            addIDIntoSelectedIds(position)
+        }
+    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -31,24 +49,46 @@ class SavedItemsAdapter() :
         holder.bind(getItem(position))
     }
 
-    inner class ViewHolder(override val containerView: View)
-        : RecyclerView.ViewHolder(containerView), LayoutContainer {
+    private fun addIDIntoSelectedIds(position: Int) {
+        val id = getItem(position).id!!
+        if (selectedIds.contains(id)) selectedIds.remove(id)
+        else selectedIds.add(id)
+
+        notifyItemChanged(position)
+        savedItemsAdapterClickListener.notifySelected(selectedIds)
+        if (selectedIds.size < 1) SavedFragment.isMultiSelectOn = false
+    }
+
+    inner class ViewHolder(override val containerView: View) :
+        RecyclerView.ViewHolder(containerView), LayoutContainer {
 
         fun bind(item: Bill) {
-            if (!item.partySize.isNullOrEmpty()) {
-                containerView.party_label.visibility = View.VISIBLE
-                containerView.people_size.text = item.partySize
-            }
-
-            if (!item.tip.isNullOrEmpty()) {
-                containerView.tip_label.visibility = View.VISIBLE
-                containerView.tip_size.text = item.tip
-            }
-
+            containerView.people_size.text =
+                if (!item.partySize.isNullOrEmpty()) item.partySize else "1"
+            containerView.tip_size.text = if (!item.tip.isNullOrEmpty()) item.tip else "0"
             containerView.date_title.text = item.date
             containerView.per_person_value.text = item.perPersonAmount
             containerView.tip_amount_value.text = item.tipAmount
             containerView.total_amount_value.text = item.totalAmount
+
+            if (selectedIds.contains(item.id)) {
+                //if item is selected then,set foreground color of FrameLayout.
+                containerView.foreground =
+                    ColorDrawable(ContextCompat.getColor(context, R.color.colorControlActivated))
+            } else {
+                //else remove selected item color.
+                containerView.foreground =
+                    ColorDrawable(ContextCompat.getColor(context, android.R.color.transparent))
+            }
+
+            containerView.setOnLongClickListener {
+                onLongItemClick(adapterPosition)
+                true
+            }
+
+            containerView.setOnClickListener {
+                onItemClick(adapterPosition)
+            }
         }
     }
 }
@@ -61,4 +101,13 @@ class DiffCallback : DiffUtil.ItemCallback<Bill>() {
     override fun areContentsTheSame(oldItem: Bill, newItem: Bill): Boolean {
         return oldItem == newItem
     }
+}
+
+interface ViewHolderClickListener {
+    fun onLongItemClick(position: Int)
+    fun onItemClick(position: Int)
+}
+
+interface SavedItemsAdapterClickListener {
+    fun notifySelected(selectedIds: List<Int>)
 }

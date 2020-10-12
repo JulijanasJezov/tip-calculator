@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
+    <style name="Widget.App.ActionMode" parent="Widget.AppCompat.ActionMode">
+        <item name="titleTextStyle">?attr/textAppearanceHeadline6</item>
+        <item name="subtitleTextStyle">?attr/textAppearanceSubtitle1</item>
+        <item name="background">@color/material_grey_900</item>
+    </style>
+
     <style name="mainTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="android:layout_marginTop">@dimen/text_input_top_margin</item>
         <item name="android:layout_marginStart">@dimen/text_input_default_margin</item>
@@ -31,4 +37,5 @@
     <style name="mainTextLabel.ListItem.Bold">
         <item name="android:textStyle">bold</item>
     </style>
+
 </resources>

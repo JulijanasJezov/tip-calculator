@@ -5,7 +5,9 @@ import javax.inject.Inject
 
 class BillsRepository @Inject constructor(private val billDao: BillDao) {
 
+    internal val savedBillsFlow = billDao.loadAllBillsFlow()
+
     suspend fun saveBill(bill: Bill) = billDao.save(bill)
 
-    internal val savedItemsFlow = billDao.loadAllBillsFlow()
+    suspend fun deleteBills(billIds: List<Int>) = billDao.deleteBillsFromDb(billIds)
 }
