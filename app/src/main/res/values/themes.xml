@@ -14,6 +14,10 @@
         <!-- Customize your theme here. -->
 
         <item name="textInputLayout">@style/mainTextInputLayout</item>
-        <item name="textLabel">@style/mainTextLabel</item>
+        <item name="textLabel">@style/mainTextLabel.Bold</item>
+        <item name="textListItem">@style/mainTextLabel.ListItem</item>
+        <item name="textListItemTitle">@style/mainTextLabel.ListItem.Bold</item>
+        <item name="textBody">@style/mainText</item>
+
     </style>
 </resources>

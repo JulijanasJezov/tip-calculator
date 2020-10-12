@@ -3,4 +3,7 @@
 
     <attr name="textInputLayout" format="reference"/>
     <attr name="textLabel" format="reference"/>
+    <attr name="textBody" format="reference"/>
+    <attr name="textListItem" format="reference"/>
+    <attr name="textListItemTitle" format="reference"/>
 </resources>

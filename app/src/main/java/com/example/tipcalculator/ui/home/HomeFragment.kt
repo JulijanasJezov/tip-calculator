@@ -15,6 +15,7 @@ import com.example.tipcalculator.util.addDecimalLimiter
 import com.example.tipcalculator.util.addDigitsRangeLimit
 import com.example.tipcalculator.util.hideKeyboard
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.transition.MaterialFadeThrough
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_home.*
 
@@ -26,6 +27,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true);
+        enterTransition = MaterialFadeThrough().apply {
+            duration = 500
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

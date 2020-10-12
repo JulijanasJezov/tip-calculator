@@ -1,7 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="?listPreferredItemHeightLarge">
+    android:layout_height="?android:listPreferredItemHeightLarge">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/date_title"
+        style="?textListItemTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Wed, 07 July, '20" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tip_label"
+        style="?textListItemTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tip_text"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:visibility="visible" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tip_size"
+        style="?textListItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/tip_label"
+        tools:text="20%" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/party_label"
+        style="?textListItemTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/people_text"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/tip_size"
+        tools:visibility="visible" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/people_size"
+        style="?textListItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/party_label"
+        tools:text="4" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/per_person_label"
+        style="?textBody"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/text_input_top_margin"
+        android:text="@string/per_person"
+        app:layout_constraintRight_toLeftOf="@id/barrier"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/per_person_value"
+        style="?textBody"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/text_input_top_margin"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="400.00" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tip_amount_label"
+        style="?textBody"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tip_amount"
+        app:layout_constraintBottom_toTopOf="@id/total_amount_label"
+        app:layout_constraintRight_toLeftOf="@id/barrier"
+        app:layout_constraintTop_toBottomOf="@id/per_person_label" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tip_amount_value"
+        style="?textBody"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/total_amount_value"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/per_person_value"
+        tools:text="100.00" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/total_amount_label"
+        style="?textBody"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/total"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/barrier" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/total_amount_value"
+        style="?textBody"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:text="400.00" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="start"
+        app:constraint_referenced_ids="total_amount_value, tip_amount_value, per_person_value" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
