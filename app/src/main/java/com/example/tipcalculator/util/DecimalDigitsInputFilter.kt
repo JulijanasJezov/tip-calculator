@@ -14,7 +14,7 @@ class DecimalDigitsInputFilter(
     ): CharSequence? {
         val text: String = dest.toString()
 
-        return if (dstart == 0 && !source[0].isDigit()) ""
+        return if (dstart == 0 && source.isNotEmpty() && !source.isDigitsOnly()) ""
         else if (source == "." && dstart <= text.length - 3) ""
         else if (text.contains(".")) {
             val index = text.indexOf(".")

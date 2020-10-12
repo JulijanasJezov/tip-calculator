@@ -1,7 +1,11 @@
 package com.example.tipcalculator.ui.home
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -10,6 +14,7 @@ import com.example.tipcalculator.R
 import com.example.tipcalculator.util.addDecimalLimiter
 import com.example.tipcalculator.util.addDigitsRangeLimit
 import com.example.tipcalculator.util.hideKeyboard
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_home.*
 
@@ -17,6 +22,26 @@ import kotlinx.android.synthetic.main.fragment_home.*
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private val homeViewModel: HomeViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true);
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.tips_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.favorite -> {
+                saveBill()
+                true
+            }
+            else -> false
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -35,16 +60,22 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun setupObservers() {
-        homeViewModel.totalAmount.observe(viewLifecycleOwner, Observer {
+        homeViewModel.totalAmount.observe(viewLifecycleOwner, {
             total_result.text = it
         })
 
-        homeViewModel.tipAmount.observe(viewLifecycleOwner, Observer {
+        homeViewModel.tipAmount.observe(viewLifecycleOwner, {
             tip_amount_result.text = it
         })
 
-        homeViewModel.perPersonAmount.observe(viewLifecycleOwner, Observer {
+        homeViewModel.perPersonAmount.observe(viewLifecycleOwner, {
             per_person_result.text = it
+        })
+
+        homeViewModel.isBillSaved.observe(viewLifecycleOwner, {
+            it.get()?.let{
+                showSavedSnackbar()
+            }
         })
     }
 
@@ -80,6 +111,36 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         button_people_6.setOnClickListener { people_input_edit.setText(R.string.number_6) }
         button_people_8.setOnClickListener { people_input_edit.setText(R.string.number_8) }
         button_people_10.setOnClickListener { people_input_edit.setText(R.string.number_10) }
+    }
 
+    private fun saveBill() {
+        if (isAmountValid()) homeViewModel.saveBill(
+            tip_input_edit.text.toString(),
+            people_input_edit.text.toString(),
+            tip_amount_result.text.toString(),
+            total_result.text.toString(),
+            per_person_result.text.toString()
+        )
+    }
+
+    private fun isAmountValid() = if(amount_input_edit.text.isNullOrBlank()) {
+        showInvalidAmountSnackbar()
+        false
+    } else true
+
+    private fun showSavedSnackbar() {
+        Snackbar.make(requireView(),
+            "Bill has been saved!"
+            , Snackbar.LENGTH_SHORT)
+            .setBackgroundTint(resources.getColor(R.color.design_default_color_primary, requireContext().theme))
+            .show()
+    }
+
+    private fun showInvalidAmountSnackbar() {
+        Snackbar.make(requireView(),
+            "Amount cannot be empty"
+            , Snackbar.LENGTH_SHORT)
+            .setBackgroundTint(resources.getColor(R.color.design_default_color_error, requireContext().theme))
+            .show()
     }
 }

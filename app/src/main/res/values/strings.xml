@@ -2,7 +2,7 @@
     <string name="app_name">Tip Calculator</string>
     <string name="title_tips">Tips</string>
     <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_saved">Saved</string>
     <string name="amount_text">Amount</string>
     <string name="tip_text">Tip</string>
     <string name="tip_10_percent">10%</string>
@@ -22,4 +22,5 @@
     <string name="total">Total:</string>
     <string name="per_person">Per person:</string>
     <string name="zero_amount">0.00</string>
+    <string name="favorite">favorite</string>
 </resources>
