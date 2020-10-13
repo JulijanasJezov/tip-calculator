@@ -26,7 +26,9 @@ class SavedItemsAdapter(
 
     override fun onLongItemClick(position: Int) = addSelectedId(position)
 
-    override fun onItemClick(position: Int) = addSelectedId(position)
+    override fun onItemClick(position: Int) {
+        if (isMultiSelectOn) addSelectedId(position)
+    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -44,6 +46,7 @@ class SavedItemsAdapter(
 
     fun removeSelectedItems() {
         selectedIds.clear()
+        isMultiSelectOn = false
         notifyDataSetChanged()
     }
 
@@ -54,6 +57,7 @@ class SavedItemsAdapter(
 
         notifyItemChanged(position)
         savedItemsAdapterClickListener.notifySelected(selectedIds)
+        isMultiSelectOn = selectedIds.size >= 1
     }
 
     inner class ViewHolder(override val containerView: View) :
@@ -85,6 +89,10 @@ class SavedItemsAdapter(
                 onItemClick(adapterPosition)
             }
         }
+    }
+
+    companion object {
+        private var isMultiSelectOn = false
     }
 }
 
