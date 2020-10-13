@@ -86,6 +86,13 @@ class SavedFragment() : Fragment(R.layout.fragment_saved), SavedItemsAdapterClic
             )
         )
         savedViewModel.billsLiveData.observe(viewLifecycleOwner, {
+            if (it.isEmpty()) {
+                saved_items_view.visibility = View.GONE;
+                empty_view.visibility = View.VISIBLE;
+            } else {
+                saved_items_view.visibility = View.VISIBLE;
+                empty_view.visibility = View.GONE;
+            }
             adapter.submitList(it)
         })
 
