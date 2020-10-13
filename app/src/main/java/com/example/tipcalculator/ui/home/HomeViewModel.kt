@@ -46,8 +46,7 @@ class HomeViewModel @ViewModelInject constructor(
 
     fun saveBill(tip: String, partySize: String, tipAmount: String, totalAmount: String, perPersonAmount: String) {
         viewModelScope.launch {
-            val dateNow = Date().format("EEE, MMM d, ''yy")
-            val bill = Bill(tip, partySize, tipAmount, totalAmount, perPersonAmount, dateNow, null)
+            val bill = Bill(tip, partySize, tipAmount, totalAmount, perPersonAmount)
             billsRepository.saveBill(bill)
             _isBillSaved.value = ValueWrapper(Unit)
         }

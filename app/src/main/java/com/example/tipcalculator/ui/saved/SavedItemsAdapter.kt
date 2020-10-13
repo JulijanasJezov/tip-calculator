@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tipcalculator.R
 import com.example.tipcalculator.model.Bill
+import com.example.tipcalculator.util.formatMedium
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_bill.view.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -40,13 +41,9 @@ class SavedItemsAdapter(
         return ViewHolder(itemLayout)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position))
-    }
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(getItem(position))
 
-    override fun getItemId(position: Int): Long {
-        return getItem(position).id!!.toLong()
-    }
+    override fun getItemId(position: Int) = getItem(position).id
 
     fun removeSelectedItems() {
         selectedIds.clear()
@@ -55,7 +52,7 @@ class SavedItemsAdapter(
     }
 
     private fun addSelectedId(position: Int) {
-        val id = getItem(position).id!!
+        val id = getItemId(position)
         if (selectedIds.contains(id)) selectedIds.remove(id)
         else selectedIds.add(id)
 
@@ -71,16 +68,16 @@ class SavedItemsAdapter(
             containerView.people_size.text =
                 if (!item.partySize.isNullOrEmpty()) item.partySize else "1"
             containerView.tip_size.text = if (!item.tip.isNullOrEmpty()) item.tip else "0"
-            containerView.date_title.text = item.date
+            containerView.date_title.text = item.creationDate.formatMedium()
             containerView.per_person_value.text = item.perPersonAmount
             containerView.tip_amount_value.text = item.tipAmount
             containerView.total_amount_value.text = item.totalAmount
 
             if (selectedIds.contains(item.id)) {
-                containerView.foreground =
+                containerView.item_layout.foreground =
                     ColorDrawable(ContextCompat.getColor(context, R.color.colorControlActivated))
             } else {
-                containerView.foreground =
+                containerView.item_layout.foreground =
                     ColorDrawable(ContextCompat.getColor(context, android.R.color.transparent))
             }
 

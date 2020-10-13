@@ -2,6 +2,7 @@ package com.example.tipcalculator.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.util.*
 
 
 @Entity
@@ -11,7 +12,7 @@ data class Bill(
     val tipAmount: String,
     val totalAmount: String,
     val perPersonAmount: String,
-    val date: String,
     @PrimaryKey(autoGenerate = true)
-    val id: Long? = null
+    val id: Long = 0,
+    val creationDate: Date = Date(System.currentTimeMillis())
 )

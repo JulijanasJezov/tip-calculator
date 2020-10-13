@@ -79,12 +79,6 @@ class SavedFragment() : Fragment(R.layout.fragment_saved), SavedItemsAdapterClic
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        saved_items_view.addItemDecoration(
-            DividerItemDecoration(
-                this.context,
-                DividerItemDecoration.VERTICAL
-            )
-        )
         savedViewModel.billsLiveData.observe(viewLifecycleOwner, {
             if (it.isEmpty()) {
                 saved_items_view.visibility = View.GONE;
