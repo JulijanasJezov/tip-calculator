@@ -13,5 +13,5 @@ data class Bill(
     val perPersonAmount: String,
     val date: String,
     @PrimaryKey(autoGenerate = true)
-    val id: Int? = null
+    val id: Long? = null
 )

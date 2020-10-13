@@ -14,7 +14,11 @@ class SavedViewModel @ViewModelInject constructor(
     @ExperimentalCoroutinesApi
     val billsLiveData = billsRepository.savedBillsFlow.map { it.reversed() }.asLiveData()
 
-    fun deleteBills(selectedItems: List<Int>) = viewModelScope.launch {
+    fun deleteBills(selectedItems: List<Long>) = viewModelScope.launch {
         billsRepository.deleteBills(selectedItems)
+    }
+
+    fun deleteBill(itemId: Long) = viewModelScope.launch {
+        billsRepository.deleteBill(itemId)
     }
 }

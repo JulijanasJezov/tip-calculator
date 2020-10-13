@@ -9,5 +9,7 @@ class BillsRepository @Inject constructor(private val billDao: BillDao) {
 
     suspend fun saveBill(bill: Bill) = billDao.save(bill)
 
-    suspend fun deleteBills(billIds: List<Int>) = billDao.deleteBillsFromDb(billIds)
+    suspend fun deleteBills(billIds: List<Long>) = billDao.deleteBillsFromDb(billIds)
+
+    suspend fun deleteBill(billId: Long) = billDao.deleteBillFromDb(billId)
 }

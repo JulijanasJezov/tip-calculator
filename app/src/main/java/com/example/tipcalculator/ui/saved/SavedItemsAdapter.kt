@@ -22,7 +22,7 @@ class SavedItemsAdapter(
 ) : ViewHolderClickListener,
     ListAdapter<Bill, SavedItemsAdapter.ViewHolder>(DiffCallback()) {
 
-    val selectedIds: MutableList<Int> = ArrayList()
+    val selectedIds: MutableList<Long> = ArrayList()
 
     override fun onLongItemClick(position: Int) = addSelectedId(position)
 
@@ -42,6 +42,10 @@ class SavedItemsAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(getItem(position))
+    }
+
+    override fun getItemId(position: Int): Long {
+        return getItem(position).id!!.toLong()
     }
 
     fun removeSelectedItems() {
@@ -112,5 +116,5 @@ interface ViewHolderClickListener {
 }
 
 interface SavedItemsAdapterClickListener {
-    fun notifySelected(selectedIds: List<Int>)
+    fun notifySelected(selectedIds: List<Long>)
 }

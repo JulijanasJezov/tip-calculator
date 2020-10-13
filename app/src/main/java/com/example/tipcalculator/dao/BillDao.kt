@@ -13,7 +13,10 @@ interface BillDao {
     fun loadAllBillsFlow(): Flow<List<Bill>>
 
     @Query("delete from bill where id in (:idList)")
-    suspend fun deleteBillsFromDb(idList: List<Int>)
+    suspend fun deleteBillsFromDb(idList: List<Long>)
+
+    @Query("delete from bill where id is :billId")
+    suspend fun deleteBillFromDb(billId: Long)
 
     @Delete
     suspend fun deleteBill(bill: Bill)

@@ -9,6 +9,8 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.example.tipcalculator.R
 import com.google.android.material.transition.MaterialFadeThrough
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,7 +30,13 @@ class SavedFragment() : Fragment(R.layout.fragment_saved), SavedItemsAdapterClic
         )
     }
     private var actionMode: ActionMode? = null
-    private var selectedItems: List<Int> = ArrayList()
+    private var selectedItems: List<Long> = ArrayList()
+
+    private val swipeHandler = object : SwipeToDeleteCallback() {
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            savedViewModel.deleteBill(adapter.getItemId(viewHolder.adapterPosition))
+        }
+    }
 
     private val callback = object : ActionMode.Callback {
 
@@ -82,9 +90,10 @@ class SavedFragment() : Fragment(R.layout.fragment_saved), SavedItemsAdapterClic
         })
 
         saved_items_view.adapter = adapter
+        ItemTouchHelper(swipeHandler).attachToRecyclerView(saved_items_view)
     }
 
-    override fun notifySelected(selectedIds: List<Int>) {
+    override fun notifySelected(selectedIds: List<Long>) {
         selectedItems = selectedIds.toMutableList()
         if (actionMode == null) actionMode = requireActivity().startActionMode(callback)
         if (selectedIds.isNotEmpty()) actionMode?.title = ("${selectedIds.size} selected")
@@ -96,7 +105,7 @@ class SavedFragment() : Fragment(R.layout.fragment_saved), SavedItemsAdapterClic
         var textToShare = ""
 
         for (id in selectedItems) {
-            val bill = savedViewModel.billsLiveData.value?.filter { it.id == id }?.first()
+            val bill = savedViewModel.billsLiveData.value?.first { it.id == id }
 
             if (!bill?.tip.isNullOrEmpty()) textToShare += "Tip: ${bill?.tip}%\n"
             if (!bill?.partySize.isNullOrEmpty()) textToShare += "People: ${bill?.partySize}\n"
