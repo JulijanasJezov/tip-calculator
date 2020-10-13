@@ -25,10 +25,10 @@ class SavedItemsAdapter(
 
     val selectedIds: MutableList<Long> = ArrayList()
 
-    override fun onLongItemClick(position: Int) = addSelectedId(position)
+    override fun onLongItemClick(position: Int) = addRemoveSelectedId(position)
 
     override fun onItemClick(position: Int) {
-        if (isMultiSelectOn) addSelectedId(position)
+        if (isMultiSelectOn) addRemoveSelectedId(position)
     }
 
     override fun onCreateViewHolder(
@@ -51,7 +51,15 @@ class SavedItemsAdapter(
         notifyDataSetChanged()
     }
 
-    private fun addSelectedId(position: Int) {
+    fun removeSelectedId(position: Int) {
+        val id = getItemId(position)
+        if (selectedIds.contains(id)) {
+            selectedIds.remove(id)
+            savedItemsAdapterClickListener.notifySelected(selectedIds)
+        }
+    }
+
+    private fun addRemoveSelectedId(position: Int) {
         val id = getItemId(position)
         if (selectedIds.contains(id)) selectedIds.remove(id)
         else selectedIds.add(id)

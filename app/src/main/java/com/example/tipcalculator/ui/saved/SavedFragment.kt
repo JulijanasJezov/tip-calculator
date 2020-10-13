@@ -35,6 +35,7 @@ class SavedFragment() : Fragment(R.layout.fragment_saved), SavedItemsAdapterClic
     private val swipeHandler = object : SwipeToDeleteCallback() {
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
             savedViewModel.deleteBill(adapter.getItemId(viewHolder.adapterPosition))
+            adapter.removeSelectedId(viewHolder.adapterPosition)
         }
     }
 
