@@ -24,12 +24,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 class SavedFragment() : Fragment(R.layout.fragment_saved), SavedItemsAdapterClickListener {
 
     private val savedViewModel: SavedViewModel by viewModels()
-    private val adapter by lazy(LazyThreadSafetyMode.NONE) {
-        SavedItemsAdapter(
-            requireContext(),
-            this
-        )
-    }
+    private val adapter by lazy(LazyThreadSafetyMode.NONE) { SavedItemsAdapter(requireContext(), this) }
     private var actionMode: ActionMode? = null
     private var selectedItems: List<Long> = ArrayList()
     private lateinit var billAlertDialogView : View
@@ -43,7 +38,6 @@ class SavedFragment() : Fragment(R.layout.fragment_saved), SavedItemsAdapterClic
     }
 
     private val callback = object : ActionMode.Callback {
-
         override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
             activity?.menuInflater?.inflate(R.menu.saved_menu, menu)
             return true
@@ -77,18 +71,11 @@ class SavedFragment() : Fragment(R.layout.fragment_saved), SavedItemsAdapterClic
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enterTransition = MaterialFadeThrough().apply {
-            duration = resources.getInteger(R.integer.config_navAnimTime).toLong()
-        }
-
+        enterTransition = MaterialFadeThrough().apply { duration = resources.getInteger(R.integer.config_navAnimTime).toLong() }
         materialAlertDialogBuilder = MaterialAlertDialogBuilder(requireContext())
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         billAlertDialogView = inflater.inflate(R.layout.dialog_bill, container, false)
         return super.onCreateView(inflater, container, savedInstanceState)
     }
@@ -109,36 +96,16 @@ class SavedFragment() : Fragment(R.layout.fragment_saved), SavedItemsAdapterClic
         ItemTouchHelper(swipeHandler).attachToRecyclerView(saved_items_view)
     }
 
+    override fun onStop() {
+        super.onStop()
+        actionMode?.finish()
+    }
+
     override fun notifySelected(selectedIds: List<Long>) {
         selectedItems = selectedIds.toMutableList()
         if (actionMode == null) actionMode = requireActivity().startActionMode(callback)
         if (selectedIds.isNotEmpty()) actionMode?.title = ("${selectedIds.size} selected")
         else actionMode?.finish()
-    }
-
-    private fun shareBills() {
-        val sendIntent = Intent()
-        var textToShare = ""
-
-        for (id in selectedItems) {
-            val bill = savedViewModel.billsLiveData.value?.first { it.id == id }
-
-            if (!bill?.tip.isNullOrEmpty()) textToShare += "Tip: ${bill?.tip}%\n"
-            if (!bill?.partySize.isNullOrEmpty()) textToShare += "People: ${bill?.partySize}\n"
-
-            textToShare += "Tip amount: ${bill?.tipAmount}\n" +
-                    "Per person: ${bill?.perPersonAmount}\n" +
-                    "Total: ${bill?.totalAmount}\n\n"
-        }
-
-        sendIntent.apply {
-            action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_TEXT, textToShare)
-            type = "text/plain"
-        }
-
-        val shareIntent = Intent.createChooser(sendIntent, null)
-        startActivity(shareIntent)
     }
 
     override fun onItemTap(bill: Bill) {
@@ -165,5 +132,30 @@ class SavedFragment() : Fragment(R.layout.fragment_saved), SavedItemsAdapterClic
                 dialog.dismiss()
             }
             .show()
+    }
+
+    private fun shareBills() {
+        val sendIntent = Intent()
+        var textToShare = ""
+
+        for (id in selectedItems) {
+            val bill = savedViewModel.billsLiveData.value?.first { it.id == id }
+
+            if (!bill?.tip.isNullOrEmpty()) textToShare += "Tip: ${bill?.tip}%\n"
+            if (!bill?.partySize.isNullOrEmpty()) textToShare += "People: ${bill?.partySize}\n"
+
+            textToShare += "Tip amount: ${bill?.tipAmount}\n" +
+                    "Per person: ${bill?.perPersonAmount}\n" +
+                    "Total: ${bill?.totalAmount}\n\n"
+        }
+
+        sendIntent.apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, textToShare)
+            type = "text/plain"
+        }
+
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        startActivity(shareIntent)
     }
 }
