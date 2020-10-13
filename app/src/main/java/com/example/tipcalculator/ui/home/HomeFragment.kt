@@ -7,6 +7,8 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.annotation.IdRes
+import androidx.annotation.StringRes
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -18,6 +20,7 @@ import com.example.tipcalculator.util.hideKeyboard
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialFadeThrough
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_home.*
 
 @AndroidEntryPoint
@@ -129,36 +132,30 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             tip_amount_result.text.toString(),
             total_result.text.toString(),
             per_person_result.text.toString()
-        ) else showErrorSnackbar("Amount cannot be empty")
+        ) else showErrorSnackbar(R.string.amount_invalid)
     }
 
     private fun isAmountValid() = !amount_input_edit.text.isNullOrBlank()
 
-    private fun showSavedSnackbar() {
-        Snackbar.make(
-            requireView(),
-            "Bill has been saved!", Snackbar.LENGTH_SHORT
-        )
-            .setBackgroundTint(
-                resources.getColor(
-                    R.color.design_default_color_primary,
-                    requireContext().theme
-                )
+    private fun showSavedSnackbar() { Snackbar.make(requireActivity().nav_view, R.string.bill_saved, Snackbar.LENGTH_SHORT)
+        .setAnchorView(requireActivity().nav_view)
+        .setBackgroundTint(
+            resources.getColor(
+                R.color.design_default_color_primary,
+                requireContext().theme
             )
-            .show()
+        ).show()
     }
 
-    private fun showErrorSnackbar(message: String) = Snackbar.make(
-        requireView(),
-        message,
-        Snackbar.LENGTH_SHORT)
+    private fun showErrorSnackbar(@StringRes message: Int) = Snackbar.make(requireActivity().nav_view, message, Snackbar.LENGTH_SHORT)
+        .setAnchorView(requireActivity().nav_view)
         .setBackgroundTint(resources.getColor(
             R.color.design_default_color_error,
             requireContext().theme)
         ).show()
 
     private fun shareBill() {
-        if (!isAmountValid()) showErrorSnackbar("Nothing to share")
+        if (!isAmountValid()) showErrorSnackbar(R.string.nothing_to_share)
         else {
             var textToShare = "Amount: ${amount_input_edit.text}\n"
             if (!tip_input_edit.text.isNullOrEmpty()) textToShare += "Tip: ${tip_input_edit.text}%\n"

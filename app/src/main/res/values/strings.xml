@@ -37,4 +37,7 @@
     <string name="bill_details">Bill details</string>
     <string name="save_text">Save</string>
     <string name="cancel_text">Cancel</string>
+    <string name="bill_saved">Bill has been saved!</string>
+    <string name="nothing_to_share">Nothing to share</string>
+    <string name="amount_invalid">Amount cannot be empty</string>
 </resources>
