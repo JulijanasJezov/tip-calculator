@@ -12,6 +12,7 @@ data class Bill(
     val tipAmount: String,
     val totalAmount: String,
     val perPersonAmount: String,
+    var name: String? = null,
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
     val creationDate: Date = Date(System.currentTimeMillis())

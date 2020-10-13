@@ -2,18 +2,19 @@ package com.example.tipcalculator.ui.saved
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.ActionMode
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tipcalculator.R
+import com.example.tipcalculator.model.Bill
+import com.example.tipcalculator.util.formatMedium
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.transition.MaterialFadeThrough
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.dialog_bill.view.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_saved.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -31,6 +32,8 @@ class SavedFragment() : Fragment(R.layout.fragment_saved), SavedItemsAdapterClic
     }
     private var actionMode: ActionMode? = null
     private var selectedItems: List<Long> = ArrayList()
+    private lateinit var billAlertDialogView : View
+    private lateinit var materialAlertDialogBuilder: MaterialAlertDialogBuilder
 
     private val swipeHandler = object : SwipeToDeleteCallback() {
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
@@ -77,6 +80,17 @@ class SavedFragment() : Fragment(R.layout.fragment_saved), SavedItemsAdapterClic
         enterTransition = MaterialFadeThrough().apply {
             duration = resources.getInteger(R.integer.config_navAnimTime).toLong()
         }
+
+        materialAlertDialogBuilder = MaterialAlertDialogBuilder(requireContext())
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        billAlertDialogView = inflater.inflate(R.layout.dialog_bill, container, false)
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -125,5 +139,31 @@ class SavedFragment() : Fragment(R.layout.fragment_saved), SavedItemsAdapterClic
 
         val shareIntent = Intent.createChooser(sendIntent, null)
         startActivity(shareIntent)
+    }
+
+    override fun onItemTap(bill: Bill) {
+        billAlertDialogView.parent?.let {
+            (billAlertDialogView.parent as ViewGroup).removeView(billAlertDialogView)
+        }
+
+        billAlertDialogView.name_input.setText(bill.name)
+        billAlertDialogView.date_text.text = bill.creationDate.formatMedium()
+        billAlertDialogView.tip_text.text = resources.getString(R.string.tip_placeholder, bill.tip)
+        billAlertDialogView.people_text.text = resources.getString(R.string.people_placeholder, bill.partySize)
+        billAlertDialogView.per_person_text.text = resources.getString(R.string.per_person_placeholder, bill.perPersonAmount)
+        billAlertDialogView.tip_amount_text.text = resources.getString(R.string.tip_amount_placeholder, bill.tipAmount)
+        billAlertDialogView.total_amount_text.text = resources.getString(R.string.total_placeholder, bill.totalAmount)
+
+        materialAlertDialogBuilder.setView(billAlertDialogView)
+            .setTitle(R.string.bill_details)
+            .setPositiveButton(R.string.save_text) { dialog, _ ->
+                bill.name = billAlertDialogView.name_input.text.toString()
+                savedViewModel.updateBill(bill)
+                dialog.dismiss()
+            }
+            .setNegativeButton(R.string.cancel_text) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 }

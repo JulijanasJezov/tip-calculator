@@ -9,6 +9,9 @@ interface BillDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun save(bill: Bill)
 
+    @Update
+    suspend fun update(bill: Bill)
+
     @Query("SELECT * FROM bill")
     fun loadAllBillsFlow(): Flow<List<Bill>>
 
@@ -17,7 +20,4 @@ interface BillDao {
 
     @Query("delete from bill where id is :billId")
     suspend fun deleteBillFromDb(billId: Long)
-
-    @Delete
-    suspend fun deleteBill(bill: Bill)
 }

@@ -1,5 +1,6 @@
 package com.example.tipcalculator.ui.saved
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
@@ -28,7 +29,7 @@ class SavedItemsAdapter(
     override fun onLongItemClick(position: Int) = addRemoveSelectedId(position)
 
     override fun onItemClick(position: Int) {
-        if (isMultiSelectOn) addRemoveSelectedId(position)
+        if (isMultiSelectOn) addRemoveSelectedId(position) else savedItemsAdapterClickListener.onItemTap(getItem(position).copy())
     }
 
     override fun onCreateViewHolder(
@@ -73,10 +74,9 @@ class SavedItemsAdapter(
         RecyclerView.ViewHolder(containerView), LayoutContainer {
 
         fun bind(item: Bill) {
-            containerView.people_size.text =
-                if (!item.partySize.isNullOrEmpty()) item.partySize else "1"
-            containerView.tip_size.text = if (!item.tip.isNullOrEmpty()) item.tip else "0"
-            containerView.date_title.text = item.creationDate.formatMedium()
+            containerView.date_title.text = if (!item.name.isNullOrEmpty()) item.name else item.creationDate.formatMedium()
+            containerView.people_size.text = if (!item.partySize.isNullOrEmpty()) item.partySize else "1"
+            containerView.tip_size.text = "${if (!item.tip.isNullOrEmpty()) item.tip else 0}%"
             containerView.per_person_value.text = item.perPersonAmount
             containerView.tip_amount_value.text = item.tipAmount
             containerView.total_amount_value.text = item.totalAmount
@@ -122,4 +122,5 @@ interface ViewHolderClickListener {
 
 interface SavedItemsAdapterClickListener {
     fun notifySelected(selectedIds: List<Long>)
+    fun onItemTap(bill: Bill)
 }

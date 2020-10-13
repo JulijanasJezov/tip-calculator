@@ -3,6 +3,7 @@ package com.example.tipcalculator.ui.saved
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.example.tipcalculator.dao.BillsRepository
+import com.example.tipcalculator.model.Bill
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -20,5 +21,9 @@ class SavedViewModel @ViewModelInject constructor(
 
     fun deleteBill(itemId: Long) = viewModelScope.launch {
         billsRepository.deleteBill(itemId)
+    }
+
+    fun updateBill(bill: Bill) = viewModelScope.launch {
+        billsRepository.updateBill(bill)
     }
 }

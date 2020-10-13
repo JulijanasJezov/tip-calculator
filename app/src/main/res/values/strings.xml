@@ -26,6 +26,15 @@
     <string name="share">share</string>
     <string name="delete">delete</string>
     <string name="people_text">People</string>
-    <string name="tip_placeholder">%s%</string>
     <string name="no_data_available">No data available</string>
+    <string name="name_optional">Name (optional)</string>
+
+    <string name="tip_amount_placeholder">Tip amount: %1$s</string>
+    <string name="total_placeholder">Total: %1$s</string>
+    <string name="tip_placeholder">Tip: %1$s%%</string>
+    <string name="people_placeholder">People: %1$s</string>
+    <string name="per_person_placeholder">Per person: %1$s</string>
+    <string name="bill_details">Bill details</string>
+    <string name="save_text">Save</string>
+    <string name="cancel_text">Cancel</string>
 </resources>
