@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.fragment_saved.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @AndroidEntryPoint
+@ExperimentalCoroutinesApi
 class SavedFragment() : Fragment(R.layout.fragment_saved), SavedItemsAdapterClickListener {
 
     private val savedViewModel: SavedViewModel by viewModels()
@@ -44,6 +45,7 @@ class SavedFragment() : Fragment(R.layout.fragment_saved), SavedItemsAdapterClic
             return when (item?.itemId) {
                 R.id.share -> {
                     shareBills()
+                    actionMode?.finish()
                     true
                 }
                 R.id.delete -> {
@@ -57,6 +59,7 @@ class SavedFragment() : Fragment(R.layout.fragment_saved), SavedItemsAdapterClic
 
         override fun onDestroyActionMode(mode: ActionMode?) {
             actionMode = null
+            adapter.removeSelectedItems()
         }
     }
 
@@ -67,7 +70,6 @@ class SavedFragment() : Fragment(R.layout.fragment_saved), SavedItemsAdapterClic
         }
     }
 
-    @ExperimentalCoroutinesApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         saved_items_view.addItemDecoration(
             DividerItemDecoration(
@@ -83,13 +85,12 @@ class SavedFragment() : Fragment(R.layout.fragment_saved), SavedItemsAdapterClic
     }
 
     override fun notifySelected(selectedIds: List<Int>) {
-        selectedItems = selectedIds
+        selectedItems = selectedIds.toMutableList()
         if (actionMode == null) actionMode = requireActivity().startActionMode(callback)
         if (selectedIds.isNotEmpty()) actionMode?.title = ("${selectedIds.size} selected")
         else actionMode?.finish()
     }
 
-    @ExperimentalCoroutinesApi
     private fun shareBills() {
         val sendIntent = Intent()
         var textToShare = ""
@@ -113,9 +114,5 @@ class SavedFragment() : Fragment(R.layout.fragment_saved), SavedItemsAdapterClic
 
         val shareIntent = Intent.createChooser(sendIntent, null)
         startActivity(shareIntent)
-    }
-
-    companion object {
-        var isMultiSelectOn = false
     }
 }

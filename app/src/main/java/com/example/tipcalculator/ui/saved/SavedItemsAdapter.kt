@@ -13,7 +13,9 @@ import com.example.tipcalculator.R
 import com.example.tipcalculator.model.Bill
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_bill.view.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalCoroutinesApi
 class SavedItemsAdapter(
     private val context: Context,
     private val savedItemsAdapterClickListener: SavedItemsAdapterClickListener
@@ -22,18 +24,9 @@ class SavedItemsAdapter(
 
     val selectedIds: MutableList<Int> = ArrayList()
 
-    override fun onLongItemClick(position: Int) {
-        if (!SavedFragment.isMultiSelectOn) {
-            SavedFragment.isMultiSelectOn = true
-        }
-        addIDIntoSelectedIds(position)
-    }
+    override fun onLongItemClick(position: Int) = addSelectedId(position)
 
-    override fun onItemClick(position: Int) {
-        if (SavedFragment.isMultiSelectOn) {
-            addIDIntoSelectedIds(position)
-        }
-    }
+    override fun onItemClick(position: Int) = addSelectedId(position)
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -49,14 +42,18 @@ class SavedItemsAdapter(
         holder.bind(getItem(position))
     }
 
-    private fun addIDIntoSelectedIds(position: Int) {
+    fun removeSelectedItems() {
+        selectedIds.clear()
+        notifyDataSetChanged()
+    }
+
+    private fun addSelectedId(position: Int) {
         val id = getItem(position).id!!
         if (selectedIds.contains(id)) selectedIds.remove(id)
         else selectedIds.add(id)
 
         notifyItemChanged(position)
         savedItemsAdapterClickListener.notifySelected(selectedIds)
-        if (selectedIds.size < 1) SavedFragment.isMultiSelectOn = false
     }
 
     inner class ViewHolder(override val containerView: View) :
@@ -72,11 +69,9 @@ class SavedItemsAdapter(
             containerView.total_amount_value.text = item.totalAmount
 
             if (selectedIds.contains(item.id)) {
-                //if item is selected then,set foreground color of FrameLayout.
                 containerView.foreground =
                     ColorDrawable(ContextCompat.getColor(context, R.color.colorControlActivated))
             } else {
-                //else remove selected item color.
                 containerView.foreground =
                     ColorDrawable(ContextCompat.getColor(context, android.R.color.transparent))
             }
