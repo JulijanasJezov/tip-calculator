@@ -10,66 +10,67 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxLength="32"
-        android:layout_marginStart="@dimen/text_input_default_margin"
+        android:layout_marginStart="22dp"
         android:hint="@string/name_optional"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/date_text"
-        style="?textListItem"
+        android:textAppearance="@style/mainText.gray"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/text_input_default_margin"
+        android:layout_marginStart="@dimen/dialog_content_margin"
+        android:layout_marginTop="@dimen/text_input_default_margin"
         app:layout_constraintTop_toBottomOf="@id/name_input"
         tools:text="Date"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tip_text"
-        style="?textListItem"
+        android:textAppearance="@style/mainText.gray"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/text_input_default_margin"
+        android:layout_marginStart="@dimen/dialog_content_margin"
         android:layout_marginTop="@dimen/text_input_top_margin"
         app:layout_constraintTop_toBottomOf="@id/date_text"
         tools:text="Tip: 20%"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/people_text"
-        style="?textListItem"
+        android:textAppearance="@style/mainText.gray"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/text_input_default_margin"
+        android:layout_marginStart="@dimen/dialog_content_margin"
         android:layout_marginTop="@dimen/text_input_top_margin"
         app:layout_constraintTop_toBottomOf="@id/tip_text"
         tools:text="People: 4"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/per_person_text"
-        style="?textListItem"
+        android:textAppearance="@style/mainText.gray"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/text_input_default_margin"
+        android:layout_marginStart="@dimen/dialog_content_margin"
         android:layout_marginTop="@dimen/text_input_top_margin"
         app:layout_constraintTop_toBottomOf="@id/people_text"
         tools:text="Per person: 5.00"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tip_amount_text"
-        style="?textListItem"
+        android:textAppearance="@style/mainText.gray"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/text_input_default_margin"
+        android:layout_marginStart="@dimen/dialog_content_margin"
         android:layout_marginTop="@dimen/text_input_top_margin"
         app:layout_constraintTop_toBottomOf="@id/per_person_text"
         tools:text="Tip amount: 10.00"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/total_amount_text"
-        style="?textListItem"
+        android:textAppearance="@style/mainText.gray"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/text_input_default_margin"
+        android:layout_marginStart="@dimen/dialog_content_margin"
         android:layout_marginTop="@dimen/text_input_top_margin"
         app:layout_constraintTop_toBottomOf="@id/tip_amount_text"
         tools:text="Total: 20.00"/>

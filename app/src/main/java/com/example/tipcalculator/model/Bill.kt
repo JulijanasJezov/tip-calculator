@@ -7,8 +7,8 @@ import java.util.*
 
 @Entity
 data class Bill(
-    val tip: String?,
-    val partySize: String?,
+    val tip: String,
+    val partySize: String,
     val tipAmount: String,
     val totalAmount: String,
     val perPersonAmount: String,

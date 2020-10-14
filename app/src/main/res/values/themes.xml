@@ -1,13 +1,16 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.TipCalculator" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+
+        <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
+
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryVariant">@color/primaryDarkColor</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorSecondary">@color/secondaryColor</item>
+        <item name="colorSecondaryVariant">@color/secondaryDarkColor</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
@@ -16,11 +19,11 @@
         <item name="actionModeCloseDrawable">@drawable/ic_close_24px</item>
         <item name="actionBarTheme">@style/ThemeOverlay.MaterialComponents.Dark.ActionBar</item>
         <!-- Customize your theme here. -->
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
 
         <item name="textInputLayout">@style/mainTextInputLayout</item>
-        <item name="textLabel">@style/mainTextLabel.Bold</item>
-        <item name="textListItem">@style/mainTextLabel.ListItem</item>
-        <item name="textListItemTitle">@style/mainTextLabel.ListItem.Bold</item>
+        <item name="textLabelBold">@style/mainTextLabel.Bold</item>
+        <item name="textLabel">@style/mainTextLabel</item>
         <item name="textBody">@style/mainText</item>
 
     </style>

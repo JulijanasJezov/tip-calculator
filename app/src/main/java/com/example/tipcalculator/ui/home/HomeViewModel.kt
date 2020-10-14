@@ -39,17 +39,35 @@ class HomeViewModel @ViewModelInject constructor(
 
     private val _isBillSaved = MutableLiveData<ValueWrapper<Unit>>()
 
-    private var totalAmountFloat = BigDecimal(0)
-    private var billAmount = BigDecimal(0)
+    private var perPersonFloat = BigDecimal.ZERO
+    private var totalAmountFloat = BigDecimal.ZERO
+    private var billAmount = BigDecimal.ZERO
     private var tip = 0
     private var partySize = 1
 
     fun saveBill(tip: String, partySize: String, tipAmount: String, totalAmount: String, perPersonAmount: String) {
         viewModelScope.launch {
-            val bill = Bill(tip, partySize, tipAmount, totalAmount, perPersonAmount)
+            val tipToSave = if (tip.isEmpty()) "0" else tip
+            val partySizeToSave = if (partySize.isEmpty()) "1" else partySize
+            val bill = Bill(tipToSave, partySizeToSave, tipAmount, totalAmount, perPersonAmount)
             billsRepository.saveBill(bill)
             _isBillSaved.value = ValueWrapper(Unit)
         }
+    }
+
+    fun roundUpTotalAmount() {
+        var roundedUp = totalAmountFloat.setScale(0, RoundingMode.UP)
+        if (roundedUp.compareTo(totalAmountFloat) == 0) roundedUp = roundedUp.add(BigDecimal.ONE)
+        calculateTotalAmount(roundedUp)
+    }
+
+    fun roundUpPerPerson() {
+        var roundedUp = perPersonFloat.setScale(0, RoundingMode.UP)
+        if (roundedUp.compareTo(perPersonFloat) == 0) roundedUp = roundedUp.add(BigDecimal.ONE)
+        totalAmountFloat = roundedUp.times(BigDecimal(partySize)).setScale(2, RoundingMode.UP)
+        perPersonFloat = roundedUp
+        _totalAmount.value = totalAmountFloat.toString()
+        _perPersonAmount.value = perPersonFloat.setScale(2, RoundingMode.UP).toString()
     }
 
     fun updateBillAmount(amount: String?) {
@@ -67,8 +85,8 @@ class HomeViewModel @ViewModelInject constructor(
         calculatePerPersonAmount()
     }
 
-    private fun calculateTotalAmount() {
-        totalAmountFloat = billAmount.add(calculateTipAmount())
+    private fun calculateTotalAmount(roundedUpAmount: BigDecimal? = null) {
+        totalAmountFloat = roundedUpAmount?.also { calculateTipAmount() } ?: billAmount.add(calculateTipAmount())
         _totalAmount.value = totalAmountFloat.setScale(2, RoundingMode.UP).toString()
         calculatePerPersonAmount()
     }
@@ -82,8 +100,8 @@ class HomeViewModel @ViewModelInject constructor(
     }
 
     private fun calculatePerPersonAmount() {
-        val tempPerPerson = totalAmountFloat.divide(BigDecimal(partySize), 2, RoundingMode.UP)
-        _perPersonAmount.value = tempPerPerson.toString()
+        perPersonFloat = totalAmountFloat.divide(BigDecimal(partySize), 2, RoundingMode.UP)
+        _perPersonAmount.value = perPersonFloat.toString()
     }
 
     companion object {

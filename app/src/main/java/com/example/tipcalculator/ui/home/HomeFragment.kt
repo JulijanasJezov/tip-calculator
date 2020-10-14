@@ -6,13 +6,10 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
-import androidx.annotation.IdRes
 import androidx.annotation.StringRes
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.example.tipcalculator.R
 import com.example.tipcalculator.util.addDecimalLimiter
 import com.example.tipcalculator.util.addDigitsRangeLimit
@@ -22,6 +19,9 @@ import com.google.android.material.transition.MaterialFadeThrough
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.layout_amount_tip.*
+import kotlinx.android.synthetic.main.layout_party_size.*
+import kotlinx.android.synthetic.main.layout_result.*
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home) {
@@ -61,6 +61,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         setupInputFields()
         setupTipButtons()
         setupPartySizeButtons()
+        setupRoundUpButtons()
         setupObservers()
 
         constraint_view.setOnClickListener {
@@ -89,6 +90,15 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 showSavedSnackbar()
             }
         })
+    }
+
+    private fun setupRoundUpButtons() {
+        total_round_up.setOnClickListener {
+            homeViewModel.roundUpTotalAmount()
+        }
+        pp_round_up.setOnClickListener {
+            homeViewModel.roundUpPerPerson()
+        }
     }
 
     private fun setupInputFields() {
@@ -141,7 +151,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         .setAnchorView(requireActivity().nav_view)
         .setBackgroundTint(
             resources.getColor(
-                R.color.design_default_color_primary,
+                R.color.secondaryColor,
                 requireContext().theme
             )
         ).show()
@@ -150,7 +160,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private fun showErrorSnackbar(@StringRes message: Int) = Snackbar.make(requireActivity().nav_view, message, Snackbar.LENGTH_SHORT)
         .setAnchorView(requireActivity().nav_view)
         .setBackgroundTint(resources.getColor(
-            R.color.design_default_color_error,
+            R.color.primaryColor,
             requireContext().theme)
         ).show()
 
