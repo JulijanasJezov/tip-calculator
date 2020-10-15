@@ -79,11 +79,11 @@ class SavedItemsAdapter(
             containerView.total_amount_value.text = item.totalAmount
 
             if (selectedIds.contains(item.id)) {
-                containerView.item_layout.foreground =
+                containerView.item_layout.background =
                     ColorDrawable(ContextCompat.getColor(context, R.color.colorControlActivated))
             } else {
-                containerView.item_layout.foreground =
-                    ColorDrawable(ContextCompat.getColor(context, android.R.color.transparent))
+                containerView.item_layout.background =
+                    ColorDrawable(ContextCompat.getColor(context, android.R.color.white))
             }
 
             containerView.setOnLongClickListener {

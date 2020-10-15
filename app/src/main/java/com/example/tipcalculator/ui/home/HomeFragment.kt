@@ -151,7 +151,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         .setAnchorView(requireActivity().nav_view)
         .setBackgroundTint(
             resources.getColor(
-                R.color.secondaryColor,
+                R.color.green,
                 requireContext().theme
             )
         ).show()
@@ -160,7 +160,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private fun showErrorSnackbar(@StringRes message: Int) = Snackbar.make(requireActivity().nav_view, message, Snackbar.LENGTH_SHORT)
         .setAnchorView(requireActivity().nav_view)
         .setBackgroundTint(resources.getColor(
-            R.color.primaryColor,
+            R.color.red,
             requireContext().theme)
         ).show()
 

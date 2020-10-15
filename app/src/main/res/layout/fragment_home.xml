@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/gray_bg"
     tools:context=".ui.home.HomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,9 +20,9 @@
             layout="@layout/layout_amount_tip"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/card_view_margin"
-            android:layout_marginStart="@dimen/card_view_margin"
-            android:layout_marginEnd="@dimen/card_view_margin"
+            android:layout_marginTop="@dimen/card_view_horizontal_margin"
+            android:layout_marginStart="@dimen/card_view_horizontal_margin"
+            android:layout_marginEnd="@dimen/card_view_horizontal_margin"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -31,8 +32,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/card_view_margin"
-            android:layout_marginStart="@dimen/card_view_margin"
-            android:layout_marginEnd="@dimen/card_view_margin"
+            android:layout_marginStart="@dimen/card_view_horizontal_margin"
+            android:layout_marginEnd="@dimen/card_view_horizontal_margin"
             app:layout_constraintTop_toBottomOf="@id/amount_tip_layout"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -41,7 +42,10 @@
             layout="@layout/layout_result"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/card_view_margin"
+            android:layout_marginTop="@dimen/card_view_margin"
+            android:layout_marginStart="@dimen/card_view_horizontal_margin"
+            android:layout_marginEnd="@dimen/card_view_horizontal_margin"
+            android:layout_marginBottom="@dimen/card_view_margin"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/party_size_layout" />

@@ -4,7 +4,7 @@
     <item
         android:id="@+id/navigation_home"
         android:icon="@drawable/ic_calculate_24px"
-        android:title="@string/title_tips" />
+        android:title="@string/title_calc" />
 
     <item
         android:id="@+id/navigation_saved"

@@ -3,8 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="?listPreferredItemHeightLarge"
-    android:layout_margin="@dimen/text_input_top_margin"
+    android:layout_height="100dp"
+    android:layout_marginBottom="@dimen/card_view_margin"
+    android:layout_marginStart="@dimen/activity_horizontal_margin"
+    android:layout_marginEnd="@dimen/activity_horizontal_margin"
     app:cardCornerRadius="4dp"
     app:cardElevation="4dp">
 
@@ -12,7 +14,7 @@
         android:id="@+id/item_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?attr/selectableItemBackground"
+        android:foreground="@drawable/selectable_item_background"
         android:paddingTop="@dimen/text_input_top_margin"
         android:paddingBottom="@dimen/text_input_top_margin">
 
@@ -48,7 +50,8 @@
             style="?textBody"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="$"
+            android:textColor="@color/green"
+            android:text="@string/plus_sign"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toLeftOf="@id/total_amount_value"
             app:layout_constraintTop_toTopOf="parent" />
