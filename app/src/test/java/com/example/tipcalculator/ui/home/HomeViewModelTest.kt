@@ -1,10 +1,10 @@
-package com.example.tipcalculator.ui.home
+package com.jjapps.tipcalculator.ui.home
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.example.tipcalculator.dao.BillsRepository
+import com.jjapps.tipcalculator.dao.BillsRepository
+import com.jjapps.tipcalculator.ui.home.HomeViewModel
 import com.nhaarman.mockitokotlin2.mock
 import org.junit.Assert.*
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
