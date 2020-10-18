@@ -10,7 +10,7 @@ android {
     compileSdkVersion 29
 
     defaultConfig {
-        applicationId "com.example.tipcalculator"
+        applicationId "com.jjapps.tipcalculator"
         minSdkVersion 24
         targetSdkVersion 29
         versionCode 1
@@ -21,7 +21,8 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            debuggable false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }

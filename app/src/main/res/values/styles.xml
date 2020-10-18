@@ -1,10 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
+    <style name="Widget.App.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView.Colored">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.BottomNavigationView</item>
+    </style>
+
+    <style name="ThemeOverlay.App.BottomNavigationView" parent="">
+    </style>
+
     <style name="Widget.App.ActionMode" parent="Widget.AppCompat.ActionMode">
         <item name="titleTextStyle">?attr/textAppearanceHeadline6</item>
         <item name="subtitleTextStyle">?attr/textAppearanceSubtitle1</item>
-        <item name="background">@color/material_grey_900</item>
+        <item name="background">@color/primaryDarkColor</item>
+    </style>
+
+    <style name="ThemeOverlay.App.MaterialAlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertDialog.App.Title.Text</item>
+    </style>
+
+    <style name="MaterialAlertDialog.App.Title.Text" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
+        <item name="android:textColor">@color/eerie_black</item>
+        <item name="android:textSize">@dimen/text_label_size</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="mainTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
@@ -16,25 +33,21 @@
     <style name="mainText" parent="Widget.MaterialComponents.TextView">
         <item name="android:layout_marginEnd">@dimen/text_input_default_margin</item>
         <item name="android:textSize">@dimen/text_size</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/eerie_black</item>
+    </style>
+
+    <style name="mainText.gray">
+        <item name="android:textColor">@color/spanish_gray</item>
     </style>
 
     <style name="mainTextLabel" parent="Widget.MaterialComponents.TextView">
-        <item name="android:layout_marginTop">@dimen/text_input_top_margin</item>
         <item name="android:layout_marginStart">@dimen/text_input_default_margin</item>
         <item name="android:layout_marginEnd">@dimen/text_input_default_margin</item>
         <item name="android:textSize">@dimen/text_label_size</item>
+        <item name="android:textColor">@color/spanish_gray</item>
     </style>
 
     <style name="mainTextLabel.Bold">
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="mainTextLabel.ListItem">
-        <item name="android:textColor">@color/black</item>
-    </style>
-
-    <style name="mainTextLabel.ListItem.Bold">
         <item name="android:textStyle">bold</item>
     </style>
 

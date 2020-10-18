@@ -1,7 +1,6 @@
 <resources>
-    <string name="app_name">Tip Calculator</string>
-    <string name="title_tips">Tips</string>
-    <string name="title_dashboard">Dashboard</string>
+    <string name="app_name">Tippp</string>
+    <string name="title_calc">Calculator</string>
     <string name="title_saved">Saved</string>
     <string name="amount_text">Amount</string>
     <string name="tip_text">Tip</string>
@@ -18,9 +17,9 @@
     <string name="number_6">6</string>
     <string name="number_4">4</string>
     <string name="number_2">2</string>
-    <string name="tip_amount">Tip amount:</string>
-    <string name="total">Total:</string>
-    <string name="per_person">Per person:</string>
+    <string name="tip_amount">Tip amount</string>
+    <string name="total">Total</string>
+    <string name="per_person">Per person</string>
     <string name="zero_amount">0.00</string>
     <string name="favorite">favorite</string>
     <string name="share">share</string>
@@ -40,4 +39,5 @@
     <string name="bill_saved">Bill has been saved!</string>
     <string name="nothing_to_share">Nothing to share</string>
     <string name="amount_invalid">Amount cannot be empty</string>
+    <string name="plus_sign">+</string>
 </resources>

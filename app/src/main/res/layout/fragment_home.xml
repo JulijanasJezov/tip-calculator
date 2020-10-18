@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.HomeFragment">
+    android:background="@color/gray_bg"
+    tools:context="com.jjapps.tipcalculator.ui.home.HomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraint_view"
@@ -14,228 +15,40 @@
         android:clickable="true"
         android:focusable="true">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/amount_input_field"
-            style="?textInputLayout"
+        <include
+            android:id="@+id/amount_tip_layout"
+            layout="@layout/layout_amount_tip"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/amount_text"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="@dimen/card_view_horizontal_margin"
+            android:layout_marginStart="@dimen/card_view_horizontal_margin"
+            android:layout_marginEnd="@dimen/card_view_horizontal_margin"
             app:layout_constraintTop_toTopOf="parent"
-            app:startIconDrawable="@drawable/ic_money">
+            app:layout_constraintStart_toStartOf="parent" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/amount_input_edit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
-                android:longClickable="false" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tip_input_field"
-            style="?textInputLayout"
+        <include
+            android:id="@+id/party_size_layout"
+            layout="@layout/layout_party_size"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/tip_text"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/amount_input_field"
-            app:startIconDrawable="@drawable/ic_percent">
+            android:layout_marginTop="@dimen/card_view_margin"
+            android:layout_marginStart="@dimen/card_view_horizontal_margin"
+            android:layout_marginEnd="@dimen/card_view_horizontal_margin"
+            app:layout_constraintTop_toBottomOf="@id/amount_tip_layout"
+            app:layout_constraintStart_toStartOf="parent" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tip_input_edit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:longClickable="false" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.button.MaterialButtonToggleGroup
-            android:id="@+id/tip_button_group"
+        <include
+            android:id="@+id/result_layout"
+            layout="@layout/layout_result"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/text_input_default_margin"
-            android:layout_marginEnd="@dimen/text_input_default_margin"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/card_view_margin"
+            android:layout_marginStart="@dimen/card_view_horizontal_margin"
+            android:layout_marginEnd="@dimen/card_view_horizontal_margin"
+            android:layout_marginBottom="@dimen/card_view_margin"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tip_input_field"
-            app:selectionRequired="false"
-            app:singleSelection="true">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_tip_10"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/tip_10_percent" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_tip_15"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/tip_15_percent" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_tip_20"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/tip_20_percent" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_tip_25"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/tip_25_percent" />
-        </com.google.android.material.button.MaterialButtonToggleGroup>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/people_input_field"
-            style="?textInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/party_size_text"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tip_button_group"
-            app:startIconDrawable="@drawable/ic_group_24px">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/people_input_edit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:longClickable="false" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.button.MaterialButtonToggleGroup
-            android:id="@+id/people_button_group"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/text_input_default_margin"
-            android:layout_marginEnd="@dimen/text_input_default_margin"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/people_input_field"
-            app:selectionRequired="false"
-            app:singleSelection="true">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_people_2"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/number_2" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_people_4"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/number_4" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_people_6"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/number_6" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_people_8"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/number_8" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_people_10"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/number_10" />
-        </com.google.android.material.button.MaterialButtonToggleGroup>
-
-        <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/barrier"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:barrierDirection="start"
-            app:constraint_referenced_ids="tip_amount_result, total_result, per_person_result" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tip_amount_label"
-            style="?textLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tip_amount"
-            app:layout_constraintEnd_toStartOf="@id/barrier"
-            app:layout_constraintTop_toBottomOf="@id/people_button_group" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/total_label"
-            style="?textLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/total"
-            app:layout_constraintEnd_toEndOf="@id/barrier"
-            app:layout_constraintTop_toBottomOf="@id/tip_amount_label" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/per_person_label"
-            style="?textLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/text_view_default_margin"
-            android:text="@string/per_person"
-            app:layout_constraintEnd_toEndOf="@id/barrier"
-            app:layout_constraintTop_toBottomOf="@id/total_label" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tip_amount_result"
-            style="?textLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/zero_amount"
-            android:textIsSelectable="true"
-            app:layout_constraintTop_toBottomOf="@id/people_button_group"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:text="23.12" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/total_result"
-            style="?textLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/zero_amount"
-            android:textIsSelectable="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tip_amount_result"
-            tools:text="143.52" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/per_person_result"
-            style="?textLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/text_view_default_margin"
-            android:text="@string/zero_amount"
-            android:textIsSelectable="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/total_result"
-            tools:text="72.78" />
+            app:layout_constraintTop_toBottomOf="@id/party_size_layout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

@@ -3,13 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/gray_bg"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.saved.SavedFragment">
+    tools:context="com.jjapps.tipcalculator.ui.saved.SavedFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/saved_items_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/item_bill"/>
 
