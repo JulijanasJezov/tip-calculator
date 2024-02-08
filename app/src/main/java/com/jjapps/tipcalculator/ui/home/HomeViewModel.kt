@@ -1,6 +1,5 @@
 package com.jjapps.tipcalculator.ui.home
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,11 +7,14 @@ import androidx.lifecycle.viewModelScope
 import com.jjapps.tipcalculator.dao.BillsRepository
 import com.jjapps.tipcalculator.model.Bill
 import com.jjapps.tipcalculator.util.ValueWrapper
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.math.BigDecimal
 import java.math.RoundingMode
+import javax.inject.Inject
 
-class HomeViewModel @ViewModelInject constructor(
+@HiltViewModel
+class HomeViewModel @Inject constructor(
     private val billsRepository: BillsRepository
 ) : ViewModel() {
 

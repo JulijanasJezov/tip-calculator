@@ -3,17 +3,15 @@ package com.jjapps.tipcalculator.ui.saved
 import android.content.Context
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.jjapps.tipcalculator.R
+import com.jjapps.tipcalculator.databinding.ItemBillBinding
 import com.jjapps.tipcalculator.model.Bill
 import com.jjapps.tipcalculator.util.formatMedium
-import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_bill.view.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
@@ -35,10 +33,7 @@ class SavedItemsAdapter(
         parent: ViewGroup,
         viewType: Int
     ): ViewHolder {
-        val itemLayout = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_bill, parent, false)
-
-        return ViewHolder(itemLayout)
+        return ViewHolder(ItemBillBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(getItem(position))
@@ -69,28 +64,28 @@ class SavedItemsAdapter(
         isMultiSelectOn = selectedIds.size >= 1
     }
 
-    inner class ViewHolder(override val containerView: View) :
-        RecyclerView.ViewHolder(containerView), LayoutContainer {
+    inner class ViewHolder(private val binding: ItemBillBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Bill) {
-            containerView.name_title.text = if (!item.name.isNullOrEmpty()) item.name else "#${item.id}"
-            containerView.date_title.text = item.creationDate.formatMedium()
-            containerView.total_amount_value.text = item.totalAmount
+            binding.nameTitle.text = if (!item.name.isNullOrEmpty()) item.name else "#${item.id}"
+            binding.dateTitle.text = item.creationDate.formatMedium()
+            binding.totalAmountValue.text = item.totalAmount
 
             if (selectedIds.contains(item.id)) {
-                containerView.item_layout.background =
+                binding.itemLayout.background =
                     ColorDrawable(ContextCompat.getColor(context, R.color.colorControlActivated))
             } else {
-                containerView.item_layout.background =
+                binding.itemLayout.background =
                     ColorDrawable(ContextCompat.getColor(context, android.R.color.white))
             }
 
-            containerView.setOnLongClickListener {
+            binding.root.setOnLongClickListener {
                 onLongItemClick(adapterPosition)
                 true
             }
 
-            containerView.setOnClickListener {
+            binding.root.setOnClickListener {
                 onItemClick(adapterPosition)
             }
         }

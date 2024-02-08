@@ -12,20 +12,22 @@ import com.jjapps.tipcalculator.model.Bill
 import com.jjapps.tipcalculator.util.formatMedium
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.transition.MaterialFadeThrough
+import com.jjapps.tipcalculator.databinding.DialogBillBinding
+import com.jjapps.tipcalculator.databinding.FragmentSavedBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.dialog_bill.view.*
-import kotlinx.android.synthetic.main.fragment_saved.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @AndroidEntryPoint
 @ExperimentalCoroutinesApi
-class SavedFragment() : Fragment(R.layout.fragment_saved), SavedItemsAdapterClickListener {
+class SavedFragment : Fragment(), SavedItemsAdapterClickListener {
+
+    private lateinit var binding: FragmentSavedBinding
 
     private val savedViewModel: SavedViewModel by viewModels()
     private val adapter by lazy(LazyThreadSafetyMode.NONE) { SavedItemsAdapter(requireContext(), this) }
     private var actionMode: ActionMode? = null
     private var selectedItems: List<Long> = ArrayList()
-    private lateinit var billAlertDialogView : View
+    private lateinit var billAlertDialogView: DialogBillBinding
     private lateinit var materialAlertDialogBuilder: MaterialAlertDialogBuilder
 
     private val swipeHandler = object : SwipeToDeleteCallback() {
@@ -69,29 +71,30 @@ class SavedFragment() : Fragment(R.layout.fragment_saved), SavedItemsAdapterClic
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enterTransition = MaterialFadeThrough().apply { duration = resources.getInteger(R.integer.config_navAnimTime).toLong() }
+        enterTransition = MaterialFadeThrough().apply { duration = resources.getInteger(R.integer.navAnimTime).toLong() }
         materialAlertDialogBuilder = MaterialAlertDialogBuilder(requireContext())
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        billAlertDialogView = inflater.inflate(R.layout.dialog_bill, container, false)
-        return super.onCreateView(inflater, container, savedInstanceState)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        binding = FragmentSavedBinding.inflate(inflater, container, false)
+        billAlertDialogView = DialogBillBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        savedViewModel.billsLiveData.observe(viewLifecycleOwner, {
+        savedViewModel.billsLiveData.observe(viewLifecycleOwner) {
             if (it.isEmpty()) {
-                saved_items_view.visibility = View.GONE;
-                empty_view.visibility = View.VISIBLE;
+                binding.savedItemsView.visibility = View.GONE
+                binding.emptyView.visibility = View.VISIBLE
             } else {
-                saved_items_view.visibility = View.VISIBLE;
-                empty_view.visibility = View.GONE;
+                binding.savedItemsView.visibility = View.VISIBLE
+                binding.emptyView.visibility = View.GONE
             }
             adapter.submitList(it)
-        })
+        }
 
-        saved_items_view.adapter = adapter
-        ItemTouchHelper(swipeHandler).attachToRecyclerView(saved_items_view)
+        binding.savedItemsView.adapter = adapter
+        ItemTouchHelper(swipeHandler).attachToRecyclerView(binding.savedItemsView)
     }
 
     override fun onStop() {
@@ -107,22 +110,22 @@ class SavedFragment() : Fragment(R.layout.fragment_saved), SavedItemsAdapterClic
     }
 
     override fun onItemTap(bill: Bill) {
-        billAlertDialogView.parent?.let {
-            (billAlertDialogView.parent as ViewGroup).removeView(billAlertDialogView)
+        billAlertDialogView.root.parent?.let {
+            (billAlertDialogView.root.parent as ViewGroup).removeView(billAlertDialogView.root)
         }
 
-        billAlertDialogView.name_input.setText(bill.name)
-        billAlertDialogView.date_text.text = bill.creationDate.formatMedium()
-        billAlertDialogView.tip_text.text = resources.getString(R.string.tip_placeholder, bill.tip)
-        billAlertDialogView.people_text.text = resources.getString(R.string.people_placeholder, bill.partySize)
-        billAlertDialogView.per_person_text.text = resources.getString(R.string.per_person_placeholder, bill.perPersonAmount)
-        billAlertDialogView.tip_amount_text.text = resources.getString(R.string.tip_amount_placeholder, bill.tipAmount)
-        billAlertDialogView.total_amount_text.text = resources.getString(R.string.total_placeholder, bill.totalAmount)
+        billAlertDialogView.nameInput.setText(bill.name)
+        billAlertDialogView.dateText.text = bill.creationDate.formatMedium()
+        billAlertDialogView.tipText.text = resources.getString(R.string.tip_placeholder, bill.tip)
+        billAlertDialogView.peopleText.text = resources.getString(R.string.people_placeholder, bill.partySize)
+        billAlertDialogView.perPersonText.text = resources.getString(R.string.per_person_placeholder, bill.perPersonAmount)
+        billAlertDialogView.tipAmountText.text = resources.getString(R.string.tip_amount_placeholder, bill.tipAmount)
+        billAlertDialogView.totalAmountText.text = resources.getString(R.string.total_placeholder, bill.totalAmount)
 
-        materialAlertDialogBuilder.setView(billAlertDialogView)
+        materialAlertDialogBuilder.setView(billAlertDialogView.root)
             .setTitle(R.string.bill_details)
             .setPositiveButton(R.string.save_text) { dialog, _ ->
-                bill.name = billAlertDialogView.name_input.text.toString()
+                bill.name = billAlertDialogView.nameInput.text.toString()
                 savedViewModel.updateBill(bill)
                 dialog.dismiss()
             }
