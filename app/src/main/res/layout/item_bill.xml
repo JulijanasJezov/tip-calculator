@@ -4,17 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="100dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:checkable="true"
     android:layout_marginBottom="@dimen/card_view_margin"
     android:layout_marginStart="@dimen/activity_horizontal_margin"
-    android:layout_marginEnd="@dimen/activity_horizontal_margin"
-    app:cardCornerRadius="4dp"
-    app:cardElevation="4dp">
+    android:layout_marginEnd="@dimen/activity_horizontal_margin">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/item_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:foreground="@drawable/selectable_item_background"
         android:paddingTop="@dimen/text_input_top_margin"
         android:paddingBottom="@dimen/text_input_top_margin">
 
@@ -25,8 +25,8 @@
             android:layout_marginStart="@dimen/text_input_default_margin"
             android:ellipsize="end"
             android:maxLines="1"
+            android:textSize="@dimen/text_label_size"
             android:scrollHorizontally="true"
-            android:textAppearance="@style/mainText"
             app:layout_constraintBottom_toTopOf="@id/date_title"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/total_amount_label"
@@ -39,7 +39,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/text_input_default_margin"
-            android:textAppearance="@style/mainText.gray"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/name_title"
@@ -50,8 +49,8 @@
             style="?textBody"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/green"
-            android:text="@string/plus_sign"
+            android:text="@string/total"
+            android:layout_marginEnd="@dimen/card_view_margin"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toLeftOf="@id/total_amount_value"
             app:layout_constraintTop_toTopOf="parent" />
@@ -61,6 +60,8 @@
             style="?textBody"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/text_input_default_margin"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"

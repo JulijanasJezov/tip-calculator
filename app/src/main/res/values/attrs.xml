@@ -5,4 +5,5 @@
     <attr name="textLabel" format="reference"/>
     <attr name="textLabelBold" format="reference"/>
     <attr name="textBody" format="reference"/>
+    <attr name="tipLogo" format="reference"/>
 </resources>

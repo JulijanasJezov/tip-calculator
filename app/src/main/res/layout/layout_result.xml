@@ -1,136 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="4dp"
-    app:cardElevation="4dp">
+    android:layout_marginBottom="@dimen/card_view_margin">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tip_amount_label"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/card_view_margin">
+        android:layout_marginTop="@dimen/text_input_top_margin"
+        android:text="@string/tip_amount"
+        android:textSize="@dimen/text_label_size"
+        app:layout_constraintEnd_toStartOf="@id/divider_one"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tip_amount_label"
-            android:textAppearance="?textLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/text_input_top_margin"
-            android:text="@string/tip_amount"
-            app:layout_constraintEnd_toStartOf="@id/divider_one"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tip_amount_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/zero_amount"
+        android:textSize="@dimen/text_size"
+        android:textStyle="bold"
+        android:textIsSelectable="true"
+        app:layout_constraintEnd_toStartOf="@id/divider_one"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tip_amount_label"
+        tools:text="23.12" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tip_amount_result"
-            android:textAppearance="?textLabelBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/zero_amount"
-            android:textIsSelectable="true"
-            app:layout_constraintEnd_toStartOf="@id/divider_one"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tip_amount_label"
-            tools:text="23.12" />
+    <View
+        android:id="@+id/divider_one"
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/guideline"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="@id/divider_two"
+        app:layout_constraintTop_toTopOf="@id/tip_amount_label" />
 
-        <View
-            android:id="@+id/divider_one"
-            android:layout_width="1dp"
-            android:layout_height="0dp"
-            android:background="@color/spanish_gray"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="@id/divider_two"
-            app:layout_constraintTop_toTopOf="@id/tip_amount_label"
-            app:layout_constraintBottom_toBottomOf="@id/guideline" />
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/total_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/text_input_top_margin"
+        android:text="@string/total"
+        android:textSize="@dimen/text_label_size"
+        app:layout_constraintEnd_toStartOf="@id/divider_two"
+        app:layout_constraintStart_toEndOf="@id/divider_one"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/total_label"
-            android:textAppearance="?textLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/text_input_top_margin"
-            android:text="@string/total"
-            app:layout_constraintEnd_toStartOf="@id/divider_two"
-            app:layout_constraintStart_toEndOf="@id/divider_one"
-            app:layout_constraintTop_toTopOf="parent" />
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/total_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/zero_amount"
+        android:textSize="@dimen/text_size"
+        android:textStyle="bold"
+        android:textIsSelectable="true"
+        app:layout_constraintEnd_toStartOf="@id/divider_two"
+        app:layout_constraintStart_toEndOf="@id/divider_one"
+        app:layout_constraintTop_toBottomOf="@id/total_label"
+        tools:text="143.52" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/total_result"
-            android:textAppearance="?textLabelBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/zero_amount"
-            android:textIsSelectable="true"
-            app:layout_constraintEnd_toStartOf="@id/divider_two"
-            app:layout_constraintStart_toEndOf="@id/divider_one"
-            app:layout_constraintTop_toBottomOf="@id/total_label"
-            tools:text="143.52" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/total_round_up"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/text_input_top_margin"
+        android:text="@string/round_up"
+        android:textSize="@dimen/round_up_text_size"
+        app:layout_constraintEnd_toStartOf="@id/divider_two"
+        app:layout_constraintStart_toEndOf="@id/divider_one"
+        app:layout_constraintTop_toBottomOf="@id/total_result" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/total_round_up"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="?attr/materialButtonOutlinedStyle"
-            android:textSize="@dimen/round_up_text_size"
-            android:layout_marginTop="@dimen/text_input_top_margin"
-            android:text="Round up"
-            app:layout_constraintEnd_toStartOf="@id/divider_two"
-            app:layout_constraintStart_toEndOf="@id/divider_one"
-            app:layout_constraintTop_toBottomOf="@id/total_result"/>
+    <View
+        android:id="@+id/divider_two"
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/guideline"
+        app:layout_constraintLeft_toRightOf="@id/divider_one"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/total_label" />
 
-        <View
-            android:id="@+id/divider_two"
-            android:layout_width="1dp"
-            android:layout_height="0dp"
-            android:background="@color/spanish_gray"
-            app:layout_constraintLeft_toRightOf="@id/divider_one"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@id/total_label"
-            app:layout_constraintBottom_toBottomOf="@id/guideline"/>
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/per_person_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/text_input_top_margin"
+        android:text="@string/per_person"
+        android:textSize="@dimen/text_label_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/divider_two"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/per_person_label"
-            android:textAppearance="?textLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/text_input_top_margin"
-            android:text="@string/per_person"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/divider_two"
-            app:layout_constraintTop_toTopOf="parent" />
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/per_person_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/zero_amount"
+        android:textSize="@dimen/text_size"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/divider_two"
+        app:layout_constraintTop_toBottomOf="@id/per_person_label"
+        tools:text="72.78" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/per_person_result"
-            android:textAppearance="?textLabelBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/zero_amount"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/divider_two"
-            app:layout_constraintTop_toBottomOf="@id/per_person_label"
-            tools:text="72.78" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/pp_round_up"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/text_input_top_margin"
+        android:text="@string/round_up"
+        android:textSize="@dimen/round_up_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/divider_two"
+        app:layout_constraintTop_toBottomOf="@id/per_person_result" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/pp_round_up"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/round_up_text_size"
-            style="?attr/materialButtonOutlinedStyle"
-            android:layout_marginTop="@dimen/text_input_top_margin"
-            android:text="Round up"
-            app:layout_constraintStart_toEndOf="@id/divider_two"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/per_person_result"/>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@id/total_result" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="@id/total_result"/>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</com.google.android.material.card.MaterialCardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -24,7 +24,7 @@ class SavedFragment : Fragment(), SavedItemsAdapterClickListener {
     private lateinit var binding: FragmentSavedBinding
 
     private val savedViewModel: SavedViewModel by viewModels()
-    private val adapter by lazy(LazyThreadSafetyMode.NONE) { SavedItemsAdapter(requireContext(), this) }
+    private val adapter by lazy(LazyThreadSafetyMode.NONE) { SavedItemsAdapter(this) }
     private var actionMode: ActionMode? = null
     private var selectedItems: List<Long> = ArrayList()
     private lateinit var billAlertDialogView: DialogBillBinding
