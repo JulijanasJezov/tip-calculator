@@ -16,5 +16,6 @@
     <dimen name="dialog_content_margin">24dp</dimen>
     <dimen name="round_up_text_size">12sp</dimen>
     <dimen name="dialog_edit_text_margin">22dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 
 </resources>

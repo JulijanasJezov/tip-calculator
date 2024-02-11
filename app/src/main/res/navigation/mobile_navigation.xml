@@ -9,11 +9,16 @@
         android:id="@+id/navigation_home"
         android:name="com.jjapps.tipcalculator.ui.home.HomeFragment"
         android:label="@string/title_calc"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_saved"
         android:name="com.jjapps.tipcalculator.ui.saved.SavedFragment"
         android:label="@string/title_saved"
         tools:layout="@layout/fragment_saved" />
+
+    <activity
+        android:id="@+id/settings_activity"
+        android:name="com.jjapps.tipcalculator.ui.settings.SettingsActivity" />
 </navigation>

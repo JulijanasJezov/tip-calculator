@@ -13,6 +13,7 @@ import androidx.core.view.MenuProvider
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.jjapps.tipcalculator.R
 import com.jjapps.tipcalculator.util.addDecimalLimiter
 import com.jjapps.tipcalculator.util.addDigitsRangeLimit
@@ -20,6 +21,7 @@ import com.jjapps.tipcalculator.util.hideKeyboard
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialFadeThrough
 import com.jjapps.tipcalculator.databinding.FragmentHomeBinding
+import com.jjapps.tipcalculator.ui.settings.SettingsActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -40,6 +42,10 @@ class HomeFragment : Fragment() {
                 }
                 R.id.share -> {
                     shareBill()
+                    true
+                }
+                R.id.settings -> {
+                    findNavController().navigate(R.id.settings_activity)
                     true
                 }
                 else -> false
